@@ -113,7 +113,7 @@ int minBST(Node* root){
 int precessador(Node* root, float val){
     if(!root) return INT_MIN;
     int key = root->data;
-    if(!root->left && val < key) return INT_MIN;
+    // if(!root->left && val < key) return INT_MIN;
     if(val == key){
         if(root->left) return maxBST(root->left);
         else return INT_MIN;
@@ -128,6 +128,20 @@ int precessador(Node* root, float val){
     } 
 }
 
+int successor(Node* root, float val){
+    if(!root) return INT_MAX;
+    int key = root->data;
+    if( key<val){
+        if(root->right) return successor(root->right, val);
+        else return INT_MAX;
+    }
+    if(key==val){
+        if(root->right) return minBST(root->right);
+        return INT_MAX;
+    }
+    if(root->left) return min(key,successor(root->left,val));
+    return key;
+}
 int main()
 {
     cout<<"Working :\n";
@@ -147,7 +161,8 @@ int main()
     // random_shuffle(a,a+10);
     for(int i=0;i<10;i++) cout<<a[i]<<" "; cout<<endl;
     Node* root = buildBST(a,10);
-    cout << precessador(root, 5.9);
+    cout << precessador(root, 8)<<endl;
+    cout << successor(root, 8);
     // preorder(root); cout<<endl;
     // inorder(root);cout<<endl;
     // postorder(root);cout<<endl;
