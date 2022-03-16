@@ -95,6 +95,11 @@ void levelOrder(Node *root)
     }
 }
 
+Node* insert(Node* root, int val){
+    if(!root) return new Node(val);
+    
+}
+
 bool isAncestor(Node* anc, Node* child){
     //Checks whether anc is ancestor of Child or not
     if(anc == child) return true;
@@ -349,6 +354,7 @@ void bottomview(Node* root)
     } 
     cout<<endl;
 }
+
 
 /*
 

@@ -84,6 +84,7 @@ void levelOrder(Node *root)
         }
         else if (!q.empty())
             q.push(NULL);
+            cout << ' ';
     }
 }
 
@@ -142,6 +143,29 @@ int successor(Node* root, float val){
     if(root->left) return min(key,successor(root->left,val));
     return key;
 }
+
+bool IsBST(Node* root, Node* min, Node* max){
+    if(!root) return true;
+    if( min and root->data < min->data) return false;
+    if( max and root->data > max->data) return false;
+    bool lval = IsBST(root->left, min , root);
+    bool rval = IsBST(root->right, root, max);
+
+    return lval and rval;
+}
+/* Make Balanced BST from a sorted Array*/
+Node* fromsorted(int a[], int n){
+    if(n<1) return NULL;
+    if(n==1){
+        return new Node(a[0]);
+    }
+    int mid = (n-1)/2;
+    Node* r = new Node(a[mid]);
+    r->left = fromsorted(a,mid);
+    r->right = fromsorted(a+mid+1, n - mid - 1);
+    return r;
+}
+
 int main()
 {
     cout<<"Working :\n";
@@ -158,11 +182,18 @@ int main()
     //  = new Node(8); 
     int a[10] = //{1,3,2,1,2,3,4,5,3,2};
     {5,6,7,9,1,2,4,8,10,3};
+    sort(a,a+10);
     // random_shuffle(a,a+10);
     for(int i=0;i<10;i++) cout<<a[i]<<" "; cout<<endl;
     Node* root = buildBST(a,10);
-    cout << precessador(root, 8)<<endl;
-    cout << successor(root, 8);
+    Node* broot = fromsorted(a,10);
+    // cout << precessador(root, 8)<<endl;
+    // cout << IsBST(root,NULL,NULL) << endl ;
+    // cout << successor(root, 8) ;
+    // preorder(broot); cout<<endl;
+    // inorder(broot);cout<<endl;
+    // postorder(broot);cout<<endl;
+    levelOrder(broot);//cout<< "\nMODIFIED:\n\n";
     // preorder(root); cout<<endl;
     // inorder(root);cout<<endl;
     // postorder(root);cout<<endl;

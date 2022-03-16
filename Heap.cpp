@@ -45,6 +45,7 @@ float findMedian()
     if(min_heap.size() > max_heap.size()) return min_heap.top();
     return max_heap.top();
 }
+*/
 
 void heapify(vector<int> &arr, int n, int i){//heapify kis aaray me karn ahai uska size , kahan se karna HAI 
     int maxIdx = i;                 //maxidx ko intialize kiya i se ,hence start point se 
@@ -71,9 +72,10 @@ void heapify(vector<int> &arr, int n, int i){//heapify kis aaray me karn ahai us
 void heapSort(vector<int> &arr){
     int n = arr.size();
     
-    for(int i=n/2-1; i>=0; i--){//i=n/2-1 , 1st node ke element ka index de dega 
-        heapify(arr, n, i);//waha pe heapify call kar dunga last element n se le kar 1st i tak ke liye , hence 1st node se
-    }//aur n/2-1 -- hai toh uske further neeche  
+    // for(int i=n/2-1; i>=0; i--){//i=n/2-1 , 1st node ke element ka index de dega 
+    //     heapify(arr, n, i);//waha pe heapify call kar dunga last element n se le kar 1st i tak ke liye , hence 1st node se
+    // }//aur n/2-1 -- hai toh uske further neeche  
+    heapify(arr,n,0);
 
     for(int i=n-1; i>0; i--){// sare vec ke indexes me se 
         swap(arr[0], arr[i]);//swap kar do arr[0] and last wale 
@@ -81,8 +83,8 @@ void heapSort(vector<int> &arr){
         heapify(arr, i, 0);//bache hue pe heapify call kar do
     }
 }
-*/
-class Node{
+
+/*class Node{
     public:
     int key;
     int m;
@@ -114,36 +116,36 @@ Node* hinsert(Node* head, int v){
         return h;
     }
     for(i=0; i<size; i++){
-         if(head->right)
+         if(head->next[i]);
     }
 }
-
+*/
 int main(){
-    /* 
-    // int n;
+     
+    int n;
     // while(true){
-    //     cin>>n;
+        cin>>n;
     //     insert(n);
     //     cout << findMedian();
     // }
     
-    // vector<int>arr(n);
-    // 
-
-    // for(int i=0; i<n; i++){
-    //     cin>>arr[i];
-    // }
+    vector<int>arr(n);
     
-    // heapSort(arr);
 
-    // for(int i=0; i<n; i++){
-    //     cout<<arr[i]<<" ";
-    //  }
-*/
-    int n,k;
-    cin>>k>>n;
-    Node *head = new Node(k,n);
-    cout<< head->key ;
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    
+    heapSort(arr);
+
+    for(int i=0; i<n; i++){
+        cout<<arr[i]<<" ";
+     }
+
+    // int n,k;
+    // cin>>k>>n;
+    // Node *head = new Node(k,n);
+    // cout<< head->key ;
     // vector<int> arr(n);
 
 
