@@ -95,10 +95,6 @@ void levelOrder(Node *root)
     }
 }
 
-Node* insert(Node* root, int val){
-    if(!root) return new Node(val);
-    
-}
 
 bool isAncestor(Node* anc, Node* child){
     //Checks whether anc is ancestor of Child or not
@@ -292,21 +288,23 @@ int maxSumOfPath(Node* root){
     return max(cs, max(ls,rs));
 }
 
-int advDia(Node* root, int &h){}
+
+// int advDia(Node* root, int &h){}
 int TreeHeight(Node *root)
 {
-    if (root)
-        return 0;
+    if (!root)
+        return -1;
     return max(TreeHeight(root->left), TreeHeight(root->right)) + 1;
 }
+
 int Diameter(Node* root){
-    if(!root) return 0;
+    if(!root) return -1;
 
     int ld= Diameter(root->left),
     rd = Diameter(root->right),
     lh = TreeHeight(root->left),
     rh = TreeHeight(root->right),
-    cd = lh + rh + 1 ;
+    cd = lh + rh + 2 ;
 
     return max(cd, max(ld,rd));
 }
@@ -329,6 +327,17 @@ vector<tuple<int,int,int>> levelmatrix(Node* root, int p, int q){
     a.insert(a.end(),ar.begin(),ar.end());
     return a;
 }
+void DeleteLeaves(Node* &root){
+    if(!root) return;
+    if(root->left || root->right){
+        DeleteLeaves(root->left);        
+        DeleteLeaves(root->right);        
+    }
+    else{
+        root=NULL;
+    }
+}
+
 void topview(Node* root)
 {
     int o=0;
@@ -392,10 +401,13 @@ int main()
     // preorder(root); cout<<endl;
     // inorder(root);cout<<endl;
     // postorder(root);cout<<endl;
-    // levelOrder(root);
+    levelOrder(root);cout<<endl;
+    
     // topview(root);
     // bottomview(root);
-    cout << maxSumOfPath(root)<<"\n";
+    DeleteLeaves(root);
+    levelOrder(root);cout<<endl;
+    cout << Diameter(root)<<"\n";
     // cout << endl<< sumAtK(root, 2) << "\n"<< SumofAllNodes(root);
     // rightView(root);
     // int d =0;
