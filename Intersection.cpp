@@ -278,13 +278,12 @@ public:
             swap(first->data, mid->data);
         }
     }
-    break;
 
 
-void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap, Node* root){
+void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap, Node* root, int first, int last){
     int n = minHeap.size();
     repp(n){
-
+        
     }
 
 
@@ -321,14 +320,23 @@ int main()
         else
             cout << "Not Vertical \nWrong Input";        
     }
-    cout << "BST Formed";
-    if(root) cout <<" NOT NULL\n";
-    else cout << "NULL\n";
-    cout << root->data; cout << '\n';
-    inorder(root); cout << '\n';
-    preorder(root);   
+    // cout << "BST Formed";
+    // if(root) cout <<" NOT NULL\n";
+    // else cout << "NULL\n";
+    // cout << root->data; cout << '\n';
+    // inorder(root); cout << '\n';
+    // preorder(root);   
     last = min(last,llast);
-    
+    int first = minHeap.top()[0];
+   
+    while(!minHeap.empty()){
+        // for_each( auto a : max_heap.top() ) cout << a << " " ;
+        loop(i,3) cout << minHeap.top()[i] << " ";
+        cout << '\n' ;
+
+        minHeap.pop();
+    }
+    return 0;
     
 }
 
