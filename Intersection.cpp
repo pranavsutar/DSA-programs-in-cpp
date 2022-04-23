@@ -1,3 +1,13 @@
+/**
+ * @file Intersection.cpp
+ * @author Pranav Sutar (CS20B029)
+ * @brief 
+ * @version 0.1
+ * @date 2022-04-24
+ *  
+ * 
+ */
+
 
 #include <bits/stdc++.h>
 
@@ -22,7 +32,7 @@ class Node
 {
 public:
     int data;// data is x coordinate of vertical line
-    int y1, y2;
+    int y1, hv, se, xs, ys;
     Node *left;
     Node *right;
 
@@ -32,11 +42,24 @@ public:
         left = NULL;
         right = NULL;
     }
-    Node(int x, int v1, int v2)
+    Node(int x, int y, int ori, int type)
     {
         data = x;
-        y1 = v1;
-        y2 = v2;
+        y1 = y;
+        hv = ori;
+        se = type;
+        left = NULL;
+        right = NULL;
+    }
+
+    Node(int x, int y, int ori, int type, int xst, int yst)
+    {
+        data = x;
+        y1 = y;
+        hv = ori;
+        se = type;
+        xs = xst;
+        ys = yst;
         left = NULL;
         right = NULL;
     }
@@ -103,11 +126,22 @@ public:
 
         return root;
     }
-    Node* insertBST(Node* root, int val, int v1, int v2){
-        if(!root) return new Node(val,v1,v2);
+    Node* insertBST(Node* root, int x, int y, int ori, int type){
+        // cout<<"Insert 4 tuple\n";
+        
+        if(!root) return new Node(x,y,ori,type);
         int dt = root->data;
-        if(val<dt) root->left = insertBST(lll(root),val,v1,v2);
-        else rrr(root) = insertBST(rrr(root),val,v1,v2);
+        if(x<dt) root->left = insertBST(lll(root),x,y,ori,type);
+        else rrr(root) = insertBST(rrr(root),x,y,ori,type);
+
+        return root;
+    }
+    Node* insertBST(Node* root, int x, int y, int ori, int type, int xst, int yst){
+        // cout<<"Insert 6 tuple\n";
+        if(!root) return new Node(x,y,ori,type,xst,yst);
+        int dt = root->data;
+        if(x<dt) root->left = insertBST(lll(root),x,y,ori,type,xst,yst);
+        else rrr(root) = insertBST(rrr(root),x,y,ori,type,xst,yst);
 
         return root;
     }
@@ -130,6 +164,22 @@ public:
         if(root->data== val) return true;
         else if(root->data > val) return SearchBST(root->left,val);
         else return SearchBST(root->right,val);
+    }
+    bool SearchBST(Node *root, int x, int y){
+        if(!root) return false;
+        if(root->data== x and root->y1 == y) return true;
+        else if(root->data == x and root->y1 > y) return SearchBST(root->left,x,y);
+        else if(root->data == x and root->y1 < y) return SearchBST(root->right,x,y);
+        else if(root->data > x) return SearchBST(root->left,x,y);
+        else return SearchBST(root->right,x,y);
+    }
+    Node* SearchBSTpt(Node *root, int x, int y){
+        if(!root) return NULL;
+        if(root->data== x and root->y1 == y) return root;
+        else if(root->data == x and root->y1 > y) return SearchBSTpt(root->left,x,y);
+        else if(root->data == x and root->y1 < y) return SearchBSTpt(root->right,x,y);
+        else if(root->data > x) return SearchBSTpt(root->left,x,y);
+        else return SearchBSTpt(root->right,x,y);
     }
     Node* Minelepointer(Node* root){
         Node* curr = root;
@@ -154,6 +204,32 @@ public:
             Node* temp = Minelepointer(root->right);
             root->data = temp->data;
             root->right = BSTdelete(rrr(root),temp->data);
+        }
+        return root;
+        
+    }
+    Node* BSTdelete(Node* root, int x, int y){
+        // cout << "BST Delete pair \n" ;
+        if (!SearchBST(root,x,y)) return root;
+        if(x<root->data) root->left = BSTdelete(root->left, x,y);
+        else if(x>root->data) root->right = BSTdelete(root->right,x,y);
+        if(y<root->y1) root->left = BSTdelete(root->left, x,y);
+        else if(y>root->y1) root->right = BSTdelete(root->right,x,y);
+        else{
+            if(!root->left){
+                Node* temp = root->right;
+                free(root);
+                return temp;
+            }
+            else if(!root->right){
+                Node* temp = root->left;
+                free(root);
+                return temp;
+            }
+            Node* temp = Minelepointer(root->right);
+            root->data = temp->data;
+            root->y1 = temp->y1;
+            root->right = BSTdelete(rrr(root),temp->data,temp->y1);
         }
         return root;
         
@@ -278,14 +354,49 @@ public:
             swap(first->data, mid->data);
         }
     }
-
-
-void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap, Node* root, int first, int last){
-    int n = minHeap.size();
-    repp(n){
-        
+    void printIntersection(Node* root, int l, int u, int xp){
+        if(root){
+            int yy = root->y1;
+            if(l<=yy && yy <=u ){
+                cout <<'(' << xp<< ',' << yy <<")\n";
+            }
+            printIntersection(lll(root),l,u,xp);
+            printIntersection(rrr(root),l,u,xp);
+        }
     }
 
+void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap){
+    int n = minHeap.size(),hv,se;
+    vii a;
+    Node* root = NULL;
+    cout << "PointOfIntersects are -\n";
+    while(!minHeap.empty()){
+        a = minHeap.top();
+        minHeap.pop();
+        hv = a[2]; se = a[3];
+        if(hv==0){
+            if(se == 0){
+                // cout << "---TO BE INSERTED\n";
+                
+                root = insertBST(root,a[0],a[1],a[2],a[3],a[4],a[5]);
+            }
+            else if(se==1){
+                // cout << "---TO BE DELETED\n";
+                
+                root = BSTdelete(root,a[4],a[5]);
+            }
+            else cout<<"ERROR se\n";
+
+        }
+        else if(hv==1){
+            int ydown = a[4],yup= a[5], xp = a[0];
+            // cout << "---INTERSEC. TO BE Printed\n";
+            printIntersection(root,ydown,yup,xp);
+        }
+        else cout << "ERROR hv\n";
+    }
+    cout << "Points Printed\n";
+}
 
 int main()
 {
@@ -300,27 +411,33 @@ int main()
     repp(n){
         cin >> x1 >> y1 >> x2 >> y2 ;
         if( last < x2 ) last =  x2;
-        if(x1>x2) swap(x1,x2);
-        if(y1 == y2)
-            minHeap.push({x1,x2,y1});
+/*        if(x1>x2){
+            swap(x1,x2);
+            swap(y1,y2);
+        } 
+*/
+        if(y1 == y2){
+            minHeap.push({x1,y1,0,0,x2,y2});
+            minHeap.push({x2,y2,0,1,x1,y1});
+        }
+            
         else
             cout << "Not Horizontal \nWrong Input";        
     }
-    cout<<"\nEnter the Vertical   Points\n";
+    cout<<"Enter the Vertical   Points\n";
     Node* root = NULL;
     repp(m){
         cin >> x1 >> y1 >> x2 >> y2 ;
         if( llast < x2 ) llast =  x2;
         if(y1>y2) swap(y1,y2);      
           
-        if(x1 == x2)   {
-            //vert.push({x1,y1,y2});
-            root = insertBST(root,x1,y1,y2);
+        if(x1 == x2){
+            minHeap.push({x1,0,1,0,min(y1,y2),max(y1,y2)});
         }                     
         else
-            cout << "Not Vertical \nWrong Input";        
+            cout << "Not Vertical \nWrong Input\n";        
     }
-    // cout << "BST Formed";
+    // cout << "MinHeap Formed";
     // if(root) cout <<" NOT NULL\n";
     // else cout << "NULL\n";
     // cout << root->data; cout << '\n';
@@ -328,20 +445,36 @@ int main()
     // preorder(root);   
     last = min(last,llast);
     int first = minHeap.top()[0];
-   
+    findIntersection(minHeap);
+    cout << "Function Executed\n";
+    /*int ct = 1;
     while(!minHeap.empty()){
-        // for_each( auto a : max_heap.top() ) cout << a << " " ;
-        loop(i,3) cout << minHeap.top()[i] << " ";
+        // for_each( auto a : max_heap.top() ) cout << a << " " 
+        cout << ct << ") ";
+        loop(i,6) cout << minHeap.top()[i] << " ";
         cout << '\n' ;
-
         minHeap.pop();
+        ct++;
     }
+    */
     return 0;
     
 }
 
 /***
- * Sample Input
+ * Sample Input 0
+
+1
+1
+1 2 3 2
+
+3 2 3 3
+ 
+ * 
+ */
+
+/***
+ * Sample Input 1
 
 4
 4
@@ -356,5 +489,36 @@ int main()
 7 3 7 7
  
  * 
+ */
+
+/***
+ * Sample Input 2
+3
+2
+
+3 6 5 6
+2 4 5 4 
+1 3 2 3
+
+4 3 4 7
+7 2 7 6
+ * 
+ */
+/***
+ * Sample Input 3
+
+6
+3
+
+3 6 5 6
+2 4 5 4 
+1 3 2 3
+5 5 9 5
+6 7 10 7
+7 1 11 1
+
+4 3 4 7
+7 2 7 6
+10 1 10 9
  * 
  */
