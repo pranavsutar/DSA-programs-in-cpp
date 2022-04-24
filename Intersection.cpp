@@ -145,12 +145,6 @@ public:
 
         return root;
     }
-    Node* buildBST(int arr[],int n){
-        if(n==0) return NULL;
-        Node* root = NULL;
-        for(int i=0;i<n;i++) root = insertBST(root,arr[i]);
-        return root;
-    }
     int maxBST(Node* root){
         if(!root->right) return root->data;
         return maxBST(root->right);
@@ -213,7 +207,7 @@ public:
         if (!SearchBST(root,x,y)) return root;
         if(x<root->data) root->left = BSTdelete(root->left, x,y);
         else if(x>root->data) root->right = BSTdelete(root->right,x,y);
-        if(y<root->y1) root->left = BSTdelete(root->left, x,y);
+        else if(y<root->y1) root->left = BSTdelete(root->left, x,y);
         else if(y>root->y1) root->right = BSTdelete(root->right,x,y);
         else{
             if(!root->left){
@@ -285,37 +279,6 @@ public:
 
         return lval and rval;
     }
-    Node* BSTfromPre(int arr[],int &ind,int key,int min, int max, int n){
-        if(ind>= n) return NULL;
-        Node* root = NULL;
-        if(key>min && key < max){
-            root = new Node(key);
-            ind++;
-            if(ind < n){
-                root->left = BSTfromPre(arr, ind,arr[ind], min, key,n);
-            }
-            if(ind<n){
-                root->right = BSTfromPre(arr,ind,arr[ind], key, max, n);
-            }
-        }
-        return root;
-    }
-    Node* BSTfromPre(int arr[], int n){
-        int o = 0;
-        return BSTfromPre(arr, o, arr[0], INT_MIN,INT_MAX, n);
-    }
-    /* Make Balanced BST from a sorted Array*/
-    Node* fromsorted(int a[], int n){
-        if(n<1) return NULL;
-        if(n==1){
-            return new Node(a[0]);
-        }
-        int mid = (n-1)/2;
-        Node* r = new Node(a[mid]);
-        r->left = fromsorted(a,mid);
-        r->right = fromsorted(a+mid+1, n - mid - 1);
-        return r;
-    }
     void swap(int &a, int &b){
         int temp = a;
         a = b;
@@ -369,7 +332,7 @@ void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap){
     int n = minHeap.size(),hv,se;
     vii a;
     Node* root = NULL;
-    cout << "PointOfIntersects are -\n";
+    cout << "Points Of Intersection are -\n";
     while(!minHeap.empty()){
         a = minHeap.top();
         minHeap.pop();
@@ -520,5 +483,6 @@ int main()
 4 3 4 7
 7 2 7 6
 10 1 10 9
+
  * 
  */
