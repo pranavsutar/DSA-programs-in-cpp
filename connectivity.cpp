@@ -12,10 +12,10 @@
 #define vii vector<int>
 #define vvi vector<vector<int>>
 #define PB push_back
-#define repp(n) for (int i = 0; i < n; i++)
-#define rrep(a, b) for (int i = a; i < b; i++)
+#define repp(n)     for (int i = 0; i < n; i++)
+#define rrep(a, b)  for (int i = a; i < b; i++)
 #define rep(i, a, b) for (int i = a; i < b; i++)
-#define loop(i, n) for (int i = 0; i < n; i++)
+#define loop(i, n)  for (int i = 0; i < n; i++)
 
 using namespace std;
 
@@ -119,14 +119,27 @@ bool isConnected(vvi &adj, int n)
 int shortestPath(vvi adj, int a, int b)
 {
     int n = adj.size(), p ;
-    if (adj[a][b] == 1 or a==b) return 0;
+    if (a==b) return 0;
+    if (adj[a][b] == 1 ) return 1;
     rep(p,1,n+1){
         vvi o(power(adj,p));
         if (o[a][b] > 0) return p;
     }
-    return p;
+
+    return -1;
 }
 
+bool isAcyclic(vvi adj){
+    int n = adj.size(), p ;
+
+    rep(p,1,n+1){
+        vvi o(power(adj,p));
+        loop(i,n) {
+            if (o[i][i] > 0) return false;
+        }
+    }
+    return true;
+}
 int main()
 {
     int n, m, i;
@@ -161,9 +174,13 @@ int main()
     // else
     //     cout << "The Graph is not Connected\n";
 
-    cout <<"Path between 0 and 3 -" << shortestPath(adj,0 , 3 ) << '\n';
-    cout <<"Path between 1 and 2 -" << shortestPath(adj,1 , 2 ) << '\n';
-    cout <<"Path between 0 and 2 -" << shortestPath(adj,0 , 2 ) << '\n';
+    cout <<"Path between 0 and 3: " << shortestPath(adj,0 , 3 ) << '\n';
+    cout <<"Path between 1 and 2: " << shortestPath(adj,1 , 2 ) << '\n';
+    cout <<"Path between 0 and 2: " << shortestPath(adj,0 , 2 ) << '\n';
+
+    if(isAcyclic(adj)) cout << "Is NOT Cyclic\n";
+    else cout << "Is Cyclic\n";
+
     return 0;
 
 
@@ -203,6 +220,19 @@ int main()
 0 0 1 0
 0 0 0 1
 0 0 0 0
+
+// 3->2->1->0->3\
+      3
+     / \
+    2   0
+     \ /
+      1
+      
+4
+0 1 0 0
+0 0 1 0
+0 0 0 1
+1 0 0 0
 
 
  * 
