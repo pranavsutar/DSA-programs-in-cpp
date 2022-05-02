@@ -23,6 +23,7 @@
         "xhash": "cpp",
         "xlocmon": "cpp",
         "xlocnum": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "cmath": "cpp"
     }
 }

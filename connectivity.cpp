@@ -21,7 +21,7 @@ using namespace std;
 
 vvi matrixmul(vvi a, vvi b)
 {
-    cout << " MM\n";
+    // cout << " MM\n";
     int n = a.size();
     vvi c(n, vii(n, 0));
 
@@ -31,12 +31,30 @@ vvi matrixmul(vvi a, vvi b)
         {
             loop(k, n)
             {
-                c[i][j] += a[i][k] * b[k][j];
+                c[i][j] |= (a[i][k] & b[k][j]);
             }
         }
     }
     return c;
 }
+
+// vii linCom(vvi b, int st, int j, int p){
+//     int n = b.size();
+//     vii v(n,0);
+//     return v;
+// }
+
+// vvi Russian(vvi a, vvi b){
+//     int n = a.size(), p = log2(n);
+//     vvi table(n/p, vii(pow(2,p),0));
+//     vector<vvi> table(n/p+1, vvi(pow(2,p),vvi(n,0)));
+//     loop(i,n/p){
+//         loop(j,pow(2,p)){
+//             table[i][j] = linCom(b,i*pow(2,p), j , p);            
+//         }
+//     }
+// }
+
 void printm(vvi a)
 {
     cout << "Matrix\n";
@@ -51,7 +69,7 @@ void printm(vvi a)
 
 vvi power(vvi A, int n)
 {
-    cout << "Power\n";
+    // cout << "Power\n";
 
     int N = A.size();
     vvi o(N, vii(N, 0));
@@ -69,17 +87,17 @@ vvi power(vvi A, int n)
 
 vvi orrify(vvi a, vvi b, int n)
 {
-    cout << "Orrify\n";
+    // cout << "Orrify\n";
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            cout << '.';
+            // cout << '.';
             // if(a[i][j]==1  or b[i][j]==1)
             //     a[i][j] = 1;
             a[i][j] = max(a[i][j], b[i][j]);
         }
-        cout << '\n';
+        // cout << '\n';
     }
     printm(a);
     return a;
@@ -87,7 +105,7 @@ vvi orrify(vvi a, vvi b, int n)
 
 vvi touch(vvi a, int n)
 {
-    cout << "Touch\n";
+    // cout << "Touch\n";
     vvi o(n, vii(n, 0));
     rep(i, 0, n + 1)
     {
@@ -98,7 +116,7 @@ vvi touch(vvi a, int n)
 
 bool isConnected(vvi &adj, int n)
 {
-    cout << "Connected\n";
+    // cout << "Connected\n";
     // int n = adj.size();
     vvi o(touch(adj, n));
 
@@ -169,10 +187,10 @@ int main()
     //     printm(power(adj, i));
     // }
 
-    // if (isConnected(adj, n))
-    //     cout << "The Graph is Connected\n";
-    // else
-    //     cout << "The Graph is not Connected\n";
+    if (isConnected(adj, n))
+        cout << "The Graph is Connected\n";
+    else
+        cout << "The Graph is not Connected\n";
 
     cout <<"Path between 0 and 3: " << shortestPath(adj,0 , 3 ) << '\n';
     cout <<"Path between 1 and 2: " << shortestPath(adj,1 , 2 ) << '\n';
@@ -186,18 +204,35 @@ int main()
 
 }
 /*
+      0
+     / 
+    3___1
+     \ /
+      2
+
+
 4
 0 0 0 1
 0 0 1 1
 0 1 0 1
 1 1 1 0
 
+      0
+     / 
+    3___1
+     \ 
+      2
 4
 0 0 0 1
 0 0 0 1
 0 0 0 1
 1 1 1 0
 
+      0
+    
+    3___1
+     \ /
+      2
 4
 0 0 0 0
 0 0 1 1
@@ -213,21 +248,28 @@ int main()
 
 /**
  * @brief 
- * ShortestPath
+ * ShortestPath and Cyclic Nature
 // 3->2->1->0
+      3
+     / 
+    2   0
+     \ /
+      1
 4
 0 1 0 0
 0 0 1 0
 0 0 0 1
 0 0 0 0
 
-// 3->2->1->0->3\
+
+// 3->2->1->0->3->....
       3
      / \
     2   0
      \ /
       1
-      
+
+
 4
 0 1 0 0
 0 0 1 0

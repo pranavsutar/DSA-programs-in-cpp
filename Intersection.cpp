@@ -65,59 +65,6 @@ public:
     }
 };
 
-
-    void preorder(Node *root)
-    {
-        if (root)
-        {
-            cout << root->data << " ";
-            preorder(root->left);
-            preorder(root->right);
-        }
-    }
-    void inorder(Node* root){
-        if(root){
-            inorder(root->left);
-            cout<<root->data<<" ";
-            inorder(root->right);
-        }
-    }
-
-    void postorder(Node* root){
-        if(root){
-            postorder(root->left);
-            postorder(root->right);
-            cout<<root->data<<" ";
-        }
-    }
-    void levelOrder(Node *root)
-    {
-        vector<int> v;
-        if (!root)
-            return;
-        queue<Node *> q;
-        q.push(root);
-        q.push(NULL);
-
-        Node *n ;
-        while (!q.empty())
-        {
-            n = q.front();
-            q.pop();
-            if (n)
-            {
-                // v.push_back(n->data);
-                cout << n->data << " ";
-                if (n->left)
-                    q.pll(n);
-                if (n->right)
-                    q.prr(n);
-            }
-            else if (!q.empty())
-                q.push(NULL);
-                cout << ' ';
-        }
-    }
     Node* insertBST(Node* root, int val){
         if(!root) return new Node(val);
         int dt = root->data;
@@ -391,8 +338,8 @@ int main()
     Node* root = NULL;
     repp(m){
         cin >> x1 >> y1 >> x2 >> y2 ;
-        if( llast < x2 ) llast =  x2;
-        if(y1>y2) swap(y1,y2);      
+        ////if( llast < x2 ) llast =  x2;
+        ////if(y1>y2) swap(y1,y2);      
           
         if(x1 == x2){
             minHeap.push({x1,0,1,0,min(y1,y2),max(y1,y2)});

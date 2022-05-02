@@ -277,7 +277,7 @@ Node *LR(Node *x)
         b = temp;
     }
 
-    void printIntersection(Node* root, int l, int u, int xp){
+void printIntersection(Node* root, int l, int u, int xp){
         if(root){
             int yy = root->y1;
             if(l<=yy && yy <=u ){
@@ -331,18 +331,14 @@ int main()
     cout<<"Enter number of Horizontal Lines\n"; cin >> n;
     cout<<"Enter number of Vertical   Lines\n"; cin >> m;
     cout<<"\nEnter the Horizontal Points\n";
-    int last = INT_MIN, llast = INT_MIN;
+
     // vvi h,v; 
     priority_queue < vii, vvi, greater<vii> > minHeap;
     priority_queue < vii, vvi, greater<vii> > vert;
     repp(n){
         cin >> x1 >> y1 >> x2 >> y2 ;
-        if( last < x2 ) last =  x2;
-/*        if(x1>x2){
-            swap(x1,x2);
-            swap(y1,y2);
-        } 
-*/
+
+
         if(y1 == y2){
             minHeap.push({x1,y1,0,0,x2,y2});
             minHeap.push({x2,y2,0,1,x1,y1});
@@ -355,8 +351,8 @@ int main()
     Node* root = NULL;
     repp(m){
         cin >> x1 >> y1 >> x2 >> y2 ;
-        if( llast < x2 ) llast =  x2;
-        if(y1>y2) swap(y1,y2);      
+        
+        // //if(y1>y2) swap(y1,y2);      
           
         if(x1 == x2){
             minHeap.push({x1,0,1,0,min(y1,y2),max(y1,y2)});
@@ -365,8 +361,6 @@ int main()
             cout << "Not Vertical \nWrong Input\n";        
     }
 
-    last = min(last,llast);
-    int first = minHeap.top()[0];
     findIntersection(minHeap);
     cout << "Function Executed\n";
     int ct = 1;
