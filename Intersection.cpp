@@ -284,7 +284,7 @@ void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap){
         a = minHeap.top();
         minHeap.pop();
         hv = a[2]; se = a[3];
-        if(hv==0){
+        if(hv==1){
             if(se == 0){
                 // cout << "---TO BE INSERTED\n";
                 
@@ -298,7 +298,7 @@ void findIntersection(priority_queue < vii, vvi, greater<vii> > minHeap){
             else cout<<"ERROR se\n";
 
         }
-        else if(hv==1){
+        else if(hv==0){
             int ydown = a[4],yup= a[5], xp = a[0];
             // cout << "---INTERSEC. TO BE Printed\n";
             printIntersection(root,ydown,yup,xp);
@@ -327,8 +327,8 @@ int main()
         } 
 */
         if(y1 == y2){
-            minHeap.push({x1,y1,0,0,x2,y2});
-            minHeap.push({x2,y2,0,1,x1,y1});
+            minHeap.push({x1,y1,1,0,x2,y2});
+            minHeap.push({x2,y2,1,1,x1,y1});
         }
             
         else
@@ -342,7 +342,7 @@ int main()
         ////if(y1>y2) swap(y1,y2);      
           
         if(x1 == x2){
-            minHeap.push({x1,0,1,0,min(y1,y2),max(y1,y2)});
+            minHeap.push({x1,0,0,0,min(y1,y2),max(y1,y2)});
         }                     
         else
             cout << "Not Vertical \nWrong Input\n";        
@@ -430,6 +430,34 @@ int main()
 4 3 4 7
 7 2 7 6
 10 1 10 9
+
+ * 
+ */
+/***
+ * Sample Input 4
+
+1
+2
+
+1 5 6 5
+
+6 1 6 5
+6 5 6 9
+
+ * 
+ */
+/***
+ * Sample Input 5
+
+2
+3
+
+0 0 2 0
+0 2 2 2
+
+0 0 0 2
+2 0 2 2
+2 2 2 4
 
  * 
  */
