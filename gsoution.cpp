@@ -1,66 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
-class Node{
-    public:
-    int data;
-    Node* left;
-    Node* right;
-
-    Node(int v){
-        data = v;
-        left = NULL;
-        right = NULL;
+void merge(int a[], int l, int m, int r){
+    cout << "MERGE\n" ;
+    int c[r-l+1] = {0}, i=l, j = m, k=0;
+    while(i<m && j <r+1){
+        if(a[i]<=a[j]){
+            c[k] = a[i];
+            i++;
+        }
+        else{
+            c[k]= a[j];
+            j++;
+        }
+        k++;
     }
-
-};
-
-unsigned int precedence(char x)
-{
-    switch(x)
+    while(i<m){
+        c[k] = a[i];
+        k++; i++;
+    }
+    while (j<r+1)
     {
-        case '/' : return 4;
-        case '*' : return 3;
-        case '+' : return 2;
-        case '-' : return 2;
+        c[k] = a[j];
+        k++; j++;
     }
-    return -1;
+    for(i=l;i<=r;i++){
+        a[i] = c[l-i];
+    }    
 }
 
-bool isOperator(char x){
-    if(x == ('+' || '/' || '-' || '*' );
+void mergeSort(int a[],int i, int j){
+    if(i>=j) return;
+    int mid = (i+j)/2 + 1;
+    mergeSort(a,i,mid-1);
+    mergeSort(a,mid,j);
+    merge(a,i,mid,j);
 }
 
-// class DLL{
-//     public:
-//     Node* head;
-
-//     void push(int v){
-//         Node* n = new Node(v);
-//         // next= &n;
-//         // n->prev = ;
-//         n->next = NULL;
-// }
-// };
-
-
-// void print(Node* nn){
-//     Node* n = nn;
-//     while(n){
-//         cout<<n->data;
-//         n = n->next;
-//     }
-// }
-
-
+void MergeSort(int a[], int n){
+    mergeSort(a,0,n-1);
+}
 bool BiSearch(int a[], int n, int key){
     if(n==1) return a[0] == key;
     int mid = n/2;
     if(a[mid] == key) return true;
     if(key < a[mid]) return BiSearch(a,mid,key);
     return BiSearch(a +mid + 1,n -mid -1,key);
-
 }
 
 int main()
@@ -71,14 +56,15 @@ int main()
 
     while (t--)
     {
-        cin >> n >> key;
+        cin >> n 
+            >> key;
         // >>m;
-        int a[n],b[n];
+        int a[n];
         // vector<int> a(n) ,b(m);
         for (i = 0; i < n; i++)
             cin >> a[i];
-            sort(a,a+n);
-
+            mergeSort(a,0,n-1);
+        for(i=0;i<n;i++) cout << a[i] <<" "; cout << endl;
         cout<<BiSearch(a,n,key)<<"\n";
     }
 
