@@ -84,7 +84,8 @@ lll= [
     [b6,b7,b8]
 ]
 def reset():
-    global lll,a,t0
+    global lll,a,t0,alternate
+    alternate = 1
     t0.config(bg = '#333', text = '')
     for i in range(Nh):
         for j in range(Nv):
