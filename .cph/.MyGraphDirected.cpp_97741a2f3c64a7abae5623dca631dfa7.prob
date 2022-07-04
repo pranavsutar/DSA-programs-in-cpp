@@ -1,0 +1,1 @@
+{"name":"Local: MyGraphDirected","url":"c:\\Users\\91762\\OneDrive\\Desktop\\JAVA\\CPlusPlus\\MyGraphDirected.cpp","tests":[{"id":1656521455924,"input":"3\n8 0 0\n3 4 6\n2 2 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\91762\\OneDrive\\Desktop\\JAVA\\CPlusPlus\\MyGraphDirected.cpp","group":"local","local":true}
