@@ -25,7 +25,7 @@
 
 using namespace std;
 const int N = 1e5 + 2, MOD = 1e9 + 7;
-int i;
+int i,j;
 vii liadj[N];
 map<int,int> inDeg;
 void showList(int n){
@@ -137,7 +137,63 @@ void topoSort(int n){
         goto punahParikshaaTrutiya;
     }
 }
-
+//Cycle Detection
+void DFS_source(vvi adj, int src, vii &vis){
+    int n = adj.size()-1;
+    stack<int> s;
+    s.push(src);
+    vis[src] = 1;
+    while (!s.empty())
+    {
+        int t = s.top();s.pop();
+        cout << t <<" ";
+        rep(i,1,n+1)
+            if( !vis[i] and adj[t][i]){
+                vis[i] = 1;
+                s.push(i);
+            }
+    }
+}
+void DFS(vvi adj){
+    cout <<"DFS using Adj:\n";
+    int n = adj.size()-1;
+    vii vis(n+1,0);
+    rep(i,1,n+1){
+        if(vis[i]==0){ 
+            // cout <<"i "<< i<<i <<" ";
+            DFS_source(adj,i,vis);
+        }
+    }
+    cout <<"\n";
+}
+void BFS_source(vvi adj, int src, vii &vis){
+    int n = adj.size()-1;
+    queue<int> q;
+    q.push(src);
+    vis[src] = 1;
+    while (!q.empty())
+    {
+        int t = q.front();q.pop();
+        cout << t <<" ";
+        rep(i,1,n+1)
+            if( !vis[i] and adj[t][i]){
+                vis[i] = 1;
+                q.push(i);
+            }
+    }
+}
+void BFS(vvi adj){
+    cout <<"BFS using Adj:\n";
+    int n = adj.size()-1;
+    vii vis(n+1,0);
+    rep(i,1,n+1){
+        if(vis[i]==0){ 
+            // cout <<"i "<< i<<i <<" ";
+            BFS_source(adj,i,vis);
+        }
+    }
+    cout <<"\n";
+}
 
 int main()
 {
@@ -157,8 +213,10 @@ int main()
     cout << isEdge(adj,2,5,true)<<endl;
     showAdj(adj);
     showList(n);
-    bfs(n);
-    dfs(n);
+    // bfs(n);
+    // dfs(n);
+    // DFS(adj);
+    // BFS(adj);
     return 0;
 } // namespace std;
 

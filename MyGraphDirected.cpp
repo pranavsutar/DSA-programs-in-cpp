@@ -137,7 +137,13 @@ void topoSort(int n){
         goto punahParikshaaTrutiya;
     }
 }
-
+// void DFS_source(vvi adj,int src,vii vis){
+//     stack <int> s;
+//     int n = adj.size();
+//     rep(i,1,n+1) {
+//         if adj[]
+//     }
+// }
 
 int main()
 {
