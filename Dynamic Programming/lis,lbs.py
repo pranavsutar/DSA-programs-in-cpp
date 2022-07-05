@@ -21,18 +21,17 @@ def longestBotanicalSubseq(a):
             if a[k]<a[i]:
                 lis[i]= max(lis[i],1 + lis[k] )
     lds=[0]*n
-    lds[0] = 1
-    for i in range(1,n):
+    lds[-1] = 1
+    for i in range(n-2,-1,-1):
         lds[i] = 1
-        for k in range(i):
-            if a[k]>a[i]:
+        for k in range(i+1,n):
+            if a[k]<a[i]:
                 lds[i]= max(lds[i],1 + lds[k] )
     lbs = [x+y-1 for x,y in zip(lis,lds)]
     print(lis)
     print(lds)
     print(lbs)
     # print()
-    print('Longest Bontanical Subsequence: ',end ="")
     return max(lbs)
 
 a = [1,2,3,8,9,4,5,6,7,1]
