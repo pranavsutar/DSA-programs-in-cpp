@@ -138,6 +138,38 @@ void topoSort(int n){
     }
 }
 //Cycle Detection
+bool cyclic_source(vvi adj, int src, vii &vis,int parent){
+    int n = adj.size()-1;
+    stack<int> s;
+    s.push(src);
+    vis[src] = 1;
+    while (!s.empty())
+    {
+        int t = s.top();s.pop();
+        rep(i,1,n+1)
+            if(  adj[t][i] and i!= parent){
+                if (vis[i] == 1) return true;
+                s.push(i);
+            }
+    }
+    return false;
+}
+bool isCyclic(vvi adj){
+    cout <<"DFS using Adj:\n";
+    int n = adj.size()-1;
+    vii vis(n+1,0);
+    rep(i,1,n+1){
+        if(vis[i]==0){ 
+            // cout <<"i "<< i<<i <<" ";
+            if (cyclic_source(adj,i,vis,)) return true;
+        }
+    }
+    return false;
+}
+void printCyclic(vvi adj){
+    if (isCyclic(adj)) cout<<"Graph is Cyclic\n";
+    else               cout<<"Graph is not Cyclic\n";
+}
 void DFS_source(vvi adj, int src, vii &vis){
     int n = adj.size()-1;
     stack<int> s;
@@ -217,6 +249,7 @@ int main()
     // dfs(n);
     // DFS(adj);
     // BFS(adj);
+    printCyclic(adj);
     return 0;
 } // namespace std;
 
