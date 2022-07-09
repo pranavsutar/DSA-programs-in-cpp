@@ -7,12 +7,12 @@ win = Tk()
 win.title("Tic Tac Toe")
 # win.iconbitmap('paintbox.ico')
 win.config(bg= '#333')
-win.minsize(width=440,height= 550 ) # w - 240, h- 211/275
-win.maxsize(width=440,height= 600)
-win['bg']="#ff920d"
+win.minsize(width=453,height= 600 ) # w - 240, h- 211/275
+win.maxsize(width=453,height= 600)
+win['bg']="#ff0000"
 # win.maxsize(width=240,height= 1000)
 # win.maxsize(width=1800, height=1000)
-t0 = Label(win,text = '',bg = '#ff920d' )
+t0 = Label(win,text = '',bg = '#ff0000' )
 
 # t2 = Label(win,text = 'Draw!' )
 Nh =3
@@ -20,7 +20,7 @@ Nv =3
 startx = 0
 starty = 0
 # t0.place(x = startx + 95, y = starty + 70*4-30)
-t0.place(x = startx + 178, y = starty + 140*4-60)
+t0.place(x = startx + 178, y = starty + 140*4-45)
 global alternate
 alternate = 1
 # ll1 = [Label(win, text = "T" + str(i), bg= "blue", fg= 'white', width = 10, height= 1) for i in range(6)]
@@ -68,17 +68,17 @@ def invert():
 # fll = [[lamTran(i,j) for  j in range(3)]for i in range(3)]
 
 # lll = [[Button(win, text = str(3*item+j+1), bg= "#edca05", fg= '#ff0000', width = 10, height = 2,command= lambda:fll[item][j](lll, 'X')) for item in range(Nv) ] for j in range(Nh)]
-b0 = Button(win, text = str(0+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(0,b0, invert())) 
-b1 = Button(win, text = str(1+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(1,b1, invert())) 
-b2 = Button(win, text = str(2+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(2,b2, invert())) 
+b0 = Button(win, text = str(0+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(0,b0, invert())) 
+b1 = Button(win, text = str(1+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(1,b1, invert())) 
+b2 = Button(win, text = str(2+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(2,b2, invert())) 
 
-b3 = Button(win, text = str(3+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(3,b3, invert())) 
-b4 = Button(win, text = str(4+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(4,b4, invert())) 
-b5 = Button(win, text = str(5+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(5,b5, invert())) 
+b3 = Button(win, text = str(3+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(3,b3, invert())) 
+b4 = Button(win, text = str(4+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(4,b4, invert())) 
+b5 = Button(win, text = str(5+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(5,b5, invert())) 
 
-b6 = Button(win, text = str(6+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(6,b6, invert())) 
-b7 = Button(win, text = str(7+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(7,b7, invert())) 
-b8 = Button(win, text = str(8+1), bg= "#edca05", fg= '#ff0000', width = 19, height = 8,command= lambda:transform(8,b8, invert())) 
+b6 = Button(win, text = str(6+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(6,b6, invert())) 
+b7 = Button(win, text = str(7+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(7,b7, invert())) 
+b8 = Button(win, text = str(8+1), bg= "#edca05", fg= '#ff0000', width = 11, height = 6, font = ('Arail',16,'bold'),command= lambda:transform(8,b8, invert())) 
 
 
 
@@ -109,7 +109,7 @@ rst = Button(win, text = 'Reset', bg= "green", fg= '#ffffff', width = 15, height
 for i in range(Nh):
     for j in range(Nv):
         lll[j][i].place(x = startx +  150*i, y =starty + 140*j)
-rst.place(x = startx + 165, y = starty + 140*3)
+rst.place(x = startx + 165, y = starty + 152*3)
 
 
 def show(ll):
