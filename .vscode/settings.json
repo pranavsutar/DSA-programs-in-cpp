@@ -26,5 +26,9 @@
         "xtree": "cpp",
         "cmath": "cpp",
         "stack": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "adjl",
+        "bipartiteness"
+    ]
 }

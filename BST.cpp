@@ -87,6 +87,64 @@ void levelOrder(Node *root)
             q.push(NULL);
             cout << ' ';
     }
+    cout<<endl;
+}
+void zigzag(Node *root)
+{
+    // vector<int> v;
+    if (!root)
+        return;
+    queue<Node *> q;
+    stack<Node *> st;
+    stack<Node *> stl;
+    q.push(root);
+    q.push(NULL);
+    // bool alt = true;
+    int alt = 0;
+    Node *n ;
+    cout << root->data<<" ";
+    while (!q.empty())
+    {
+        n = q.front();
+        q.pop();
+        if (n)
+        {
+            // v.push_back(n->data);
+            // cout << n->data << " ";
+            if (n->left)
+                st.pll(n);
+            if (n->right)
+                st.prr(n);
+        }
+        else if (!q.empty())
+            q.push(NULL);
+            cout << ' ';
+            // while(!st.empty()){
+            //     q.push(st.top());
+            //     st.pop();
+            // }
+            if (alt){
+                while(!st.empty()){
+                    q.push(st.top());
+                    cout << st.top()->data <<" ";
+                    st.pop();
+                }
+            }
+            else{
+                while(!st.empty()){
+                    stl.push(st.top());
+                    st.pop();
+                }
+                while(!stl.empty()){
+                    q.push(stl.top());
+                    cout << stl.top()->data << " ";
+                    stl.pop();
+                }
+            }
+            alt = 1 - alt;
+            // alt = true xor alt;
+    }
+    cout << endl;
 }
 
 Node* insertBST(Node* root, int val){
@@ -324,7 +382,8 @@ int main()
     // preorder(root); cout<<endl;
     // inorder(root);cout<<endl;
     // postorder(root);cout<<endl;
-    // levelOrder(root);//cout<< "\nMODIFIED:\n\n";
+    levelOrder(root);//cout<< "\nMODIFIED:\n\n";
+    zigzag(root);
     // flatten(root);
     // preorder(root); cout<<endl;
     // inorder(root);cout<<endl;
@@ -337,10 +396,10 @@ int main()
     // rightView(root);
     // int d =0;
     // cout<< calculateDist(root, 2, 4);
-    inorder(root);cout<<endl;
-    cout<<minBST(root)<<endl;
-    cout<<kthSmallest(root,8);
-    cout<<"\nIti Sampurna";
+    // inorder(root);cout<<endl;
+    // cout<<minBST(root)<<endl;
+    // cout<<kthSmallest(root,8);
+    // cout<<"\nIti Sampurna";
     return 0;
 }
 

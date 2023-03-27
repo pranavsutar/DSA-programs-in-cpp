@@ -15,6 +15,7 @@
 #define lll(n) n->left
 #define prr(n) push(n->right)
 #define rrr(n) (n->right)
+#define int long long
 
 #define pii pair<int,int>
 #define vii vector<int>
@@ -26,8 +27,8 @@
 #define loop(i, n) for (int i = 0; i < n; i++)
 
 using namespace std;
-const int inf = 10000;
-int main(){
+const int inf = LONG_MAX-2;a
+signed main(){
     int n, m,u,v,w, source; cin >> n >> m;
     vii dist(n+1,inf);
     vector<vector<pair<int,int>>> graph(n+1);

@@ -173,7 +173,8 @@ int main()
 	g.addEdge('3', '4',9, 1);
 	g.addEdge('5', '4',10, 1);
 	g.addEdge('7', '6',1, 1);
-	g.print_adj();
-	g.bfs_sssp('4');
+	// g.print_adj();
+	// g.bfs_sssp('4');
+	g.dijkstra(5);
 	return 0;
 }

@@ -1,51 +1,44 @@
 
-import sys
-import math as mm
-from collections import defaultdict
+s1 = input()
+s2 = input()
 
-input = sys.stdin.readline
+def sub(s1,s2):
+    if len(s1) < len(s2):
+        s1, s2 = s2, s1
+    ans = ''
+    if len(s1) == 0:
+        ans = '0'
+        return ans
+    if len(s2) == 0:
+        ans = s1
+        return ans
+    x = int(s1[-1]); y = int(s2[-1])
+    if x >= y:
+        ans = sub(s1[:-1],s2[:-1]) + str(x-y)
+    else:
+        ans = sub(s1[:-1],s2[:-1]) + str(x+10-y)
+        ans = sub(ans[:-1], '1') + ans[-1]
+    return ans
 
-mx = 100001
-s1 = [0 for _ in range(mx)]
-s1[1] = 1
+ans = sub(s1,s2)
+print(ans)
+'''
+Testcases
 
-for j in range(2,mx):
-    s1[j]=j
-for j in range(4,mx,2):
-    s1[j]=2
-for i in range(3,mm.ceil(mx**0.5)):
-    if s1[i] == i:
-        for j in range(i**2,mx,i):
-            if s1[j] == j :
-                s1[j] = i
+123456789
+123456789
+0
+
+123456789
+123456788
+1
+
+987654321
+123456789
+864197532
+
+'''
 
 
-def gpf(x):
-    r = defaultdict(lambda:0) 
-    while(x!= 1):
-        r[s1[x]]+=1
-        x = x// s1[x]
-        return r
-
-def help():
-    n,q =  [int(x) for x in input().split()]
-    for i in range(q):
-        u,v = [int(x) for x in input().split()]
-        u = gpf(u)
-        v = gpf(v)
-        x = set(list(u.keys()) + list(v.keys()))  
-
-        for i in x:
-            y = min(u[i],v[i])
-            u[i] -= y
-            v[i] -= y
+    
         
-        a = 0
-        for i in x:
-            a += i*(u[i] + v[i]) 
-        print(a) 
-
-
-
-for _ in range(int(input())):
-    help()
