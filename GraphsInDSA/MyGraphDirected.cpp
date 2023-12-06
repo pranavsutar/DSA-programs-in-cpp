@@ -25,8 +25,9 @@
 
 using namespace std;
 const int N = 1e5 + 2, MOD = 1e9 + 7;
-int i,j;
+int i;
 vii liadj[N];
+vii visited(N,0);
 map<int,int> inDeg;
 void showList(int n){
     cout << "Adjacency List:\n";
@@ -43,6 +44,7 @@ void showAdj(vvi adj){
         rep(j,1,n) cout << adj[i][j] << " " ;cout << '\n';
     }    
 }
+
 bool isEdge(vvi adj, int v1, int v2, bool isDirected){
     if (isDirected) return adj[v1][v2];
     return adj[v1][v2] && adj[v2][v1];
@@ -100,6 +102,7 @@ cout << "_____\nDeapth First Search:\n";
     }
     
 }
+
 void topoSort(int n){
     cout << "Topological Sorting :\n";
     auto inDegThis = inDeg;
@@ -137,99 +140,117 @@ void topoSort(int n){
         goto punahParikshaaTrutiya;
     }
 }
-//Cycle Detection
-bool cyclic_source(vvi adj, int src, vii &vis,int parent){
-    int n = adj.size()-1;
-    stack<int> s;
-    s.push(src);
-    vis[src] = 1;
-    while (!s.empty())
-    {
-        int t = s.top();s.pop();
-        rep(i,1,n+1)
-            if(  adj[t][i] and i!= parent){
-                if (vis[i] == 1) return true;
-                s.push(i);
-            }
-    }
-    return false;
-}
-bool isCyclic(vvi adj){
-    cout <<"DFS using Adj:\n";
-    int n = adj.size()-1;
-    vii vis(n+1,0);
-    rep(i,1,n+1){
-        if(vis[i]==0){ 
-            // cout <<"i "<< i<<i <<" ";
-            if (cyclic_source(adj,i,vis,)) return true;
-        }
-    }
-    return false;
-}
-void printCyclic(vvi adj){
-    if (isCyclic(adj)) cout<<"Graph is Cyclic\n";
-    else               cout<<"Graph is not Cyclic\n";
-}
-void DFS_source(vvi adj, int src, vii &vis){
-    int n = adj.size()-1;
-    stack<int> s;
-    s.push(src);
-    vis[src] = 1;
-    while (!s.empty())
-    {
-        int t = s.top();s.pop();
-        cout << t <<" ";
-        rep(i,1,n+1)
-            if( !vis[i] and adj[t][i]){
-                vis[i] = 1;
-                s.push(i);
-            }
-    }
-}
-void DFS(vvi adj){
-    cout <<"DFS using Adj:\n";
-    int n = adj.size()-1;
-    vii vis(n+1,0);
-    rep(i,1,n+1){
-        if(vis[i]==0){ 
-            // cout <<"i "<< i<<i <<" ";
-            DFS_source(adj,i,vis);
-        }
-    }
-    cout <<"\n";
-}
-void BFS_source(vvi adj, int src, vii &vis){
-    int n = adj.size()-1;
+// check cycle in directed graph
+bool isCyclic(int n){
+    cout << "_____\nChecking Cyclic:\n";
+    auto inDegThis = inDeg;
     queue<int> q;
-    q.push(src);
-    vis[src] = 1;
+    vii vis(n+1,0);
+    rep(i,1,n+1){
+        if (inDegThis[i]==0)
+        {
+            cout <<"Indegree of "<< i << " is " <<inDegThis[i]<<"\n";
+            vis[i]=1;
+            q.push(i);
+        }        
+    }
+    if (q.empty()){
+        cout << "As the Graph is Cyclic, we couldn't do Topological Sort\nSorry\n";
+        return true;
+    }
+    punahParikshaaChaturth:
+    while(!q.empty()){
+        i = q.front();q.pop();
+        cout << i <<"\n";
+        for(int in : liadj[i]){
+            int p = --inDegThis[in];
+            /*This is important*/
+            if(!p){
+                q.push(in);
+                vis[in] = 1;
+            }
+        }
+    }
+    rep(i,1,n+1) if (vis[i]==0){
+        vis[i]=1;
+        q.push(i);
+        goto punahParikshaaChaturth;
+    }
+    return false;
+}    
+
+// checking connectivity in undirected graph
+bool isConnected(int n){
+    cout << "_____\nChecking Connectivity:\n";
+    vii vis(n+1,0);
+    queue<int> q;
+    q.push(1); 
+    vis[1] = true;
+    punahParikshaaPanchami:
     while (!q.empty())
     {
-        int t = q.front();q.pop();
-        cout << t <<" ";
-        rep(i,1,n+1)
-            if( !vis[i] and adj[t][i]){
-                vis[i] = 1;
+        int node = q.front();
+        q.pop();
+        cout << node <<"\n";
+        for (auto i: liadj[node]){
+            if(!vis[i]){
+                vis[i]=true;
                 q.push(i);
             }
-    }
-}
-void BFS(vvi adj){
-    cout <<"BFS using Adj:\n";
-    int n = adj.size()-1;
-    vii vis(n+1,0);
-    rep(i,1,n+1){
-        if(vis[i]==0){ 
-            // cout <<"i "<< i<<i <<" ";
-            BFS_source(adj,i,vis);
         }
     }
-    cout <<"\n";
+    rep(i,1,n+1) if (vis[i]==0){
+        vis[i]=1;
+        q.push(i);
+        goto punahParikshaaPanchami;
+    }
+    return true;
+}
+
+// checking bipartite in undirected graph
+bool isBipartite(int n){
+    cout << "_____\nChecking Bipartite:\n";
+    vii vis(n+1,0);
+    vii color(n+1,0);
+    queue<int> q;
+    q.push(1); 
+    vis[1] = true;
+    color[1] = 1;
+    punahParikshaaShasti:
+    while (!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+        cout << node <<"\n";
+        for (auto i: liadj[node]){
+            if(!vis[i]){
+                vis[i]=true;
+                q.push(i);
+                color[i] = 1-color[node];
+            }
+            else if (color[i]==color[node]) return false;
+        }
+    }
+    rep(i,1,n+1) if (vis[i]==0){
+        vis[i]=1;
+        q.push(i);
+        goto punahParikshaaShasti;
+    }
+    return true;
+}
+
+// returning node with maximum indegree
+int maxIndegree(int n){
+    int max = 0;
+    rep(i,1,n+1){
+        if (inDeg[i]>max) max = inDeg[i];
+    }
+    return max;
 }
 
 int main()
 {
-    cout << "Udbhava sthiti sanhaara kaarinim klesh-haariṇim|\nSarvam shreyaskarim sitaam natooham RamVallabhaam||\n";
+    // cout << "Udbhava sthiti sanhaara kaarinim klesh-haariṇim|\nSarvam shreyaskarim sitaam natooham RamVallabhaam||\n";
     int n, m, x ,y;
     cin >> n >> m;
     vvi adj(n+1,vii(n+1,0));
@@ -237,19 +258,19 @@ int main()
     loop(i,m){
         cin >> x >> y;
         adj[x][y] = 1; // Points x->y
-         adj[y][x] = 1;  
+        //  adj[y][x] = 1;  
         liadj[x].push_back(y); // Points x->y
-        /*In Undirected Case*/ liadj[y].push_back(x);
-        inDeg[x]++;inDeg[y]++;
+        // /*In Undirected Case*/ liadj[y].push_back(x);
+        inDeg[y]++;
     }
-    cout << isEdge(adj,2,5,true)<<endl;
-    showAdj(adj);
-    showList(n);
+    // cout << isEdge(adj,2,5,true)<<endl;
+    // showAdj(adj);
+    // showList(n);
     // bfs(n);
     // dfs(n);
-    // DFS(adj);
-    // BFS(adj);
-    printCyclic(adj);
+    // topoSort(n);
+    if (isCyclic(n)) cout << "Cycle is Present\n";
+    else cout << "Cycle is not Present\n";
     return 0;
 } // namespace std;
 

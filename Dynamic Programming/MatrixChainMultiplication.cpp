@@ -8,7 +8,7 @@
 #define lll(n) n->left
 #define prr(n) push(n->right)
 #define rrr(n) (n->right)
-
+#define int long long
 #define vii vector<int>
 #define vvi vector<vii>
 #define vvvi vector<vvi>
@@ -24,7 +24,7 @@
 using namespace std;
 
 int mcm(vii a, int n){
-    vvi  dp(n+1, vii (n+1,INT_MAX));
+    vvi  dp(n+1, vii (n+1,LONG_MAX-INT_MAX/2));
     rep(i,0,n+1)
         rep(j,i,n+1){
             if ( i>=j ) {
@@ -36,23 +36,23 @@ int mcm(vii a, int n){
                 }
             }
         }
-    cout << dp[3][0]<< " ";
-    loop(i,n+1){
-        loop(j,n+1) cout << dp[i][j] <<" "; cout << endl;
-    }
+    // cout << dp[3][0]<< " ";
+    // loop(i,n+1){
+    //     loop(j,n+1) cout << dp[i][j] <<" "; cout << endl;
+    // }
     return dp[1][n-1];
 }
 
 int mcm(vii a, int i, int j){
     if (i>=j) return 0;
-    int ans = INT_MAX;
+    int ans = LONG_MAX-INT_MAX/2;
     rep(k,i,j-1){
         ans = min(ans , mcm(a,i,k) + mcm(a,k+1,j) + a[i-1]*a[k]*a[j]);
     }   
     return ans;
 }
 
-int main()
+signed main()
 {
     int n; cin >> n;
     vii a(n);
