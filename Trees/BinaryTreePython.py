@@ -91,6 +91,28 @@ def treeBFS(adjl,src,parent,dist):
             d = max(d,treeBFS(adjl,child,src,dist+1))
     return d
 
+def LevelOrderTransversal(root:TreeNode):
+    # Each level on a new line
+    # BFS
+    if root is None:
+        return
+    q = []
+    q.append(root)
+    levels = []
+    while len(q)>0:
+        levels.append([])
+        for i in range(len(q)):
+            node = q.pop(0)
+            levels[-1].append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+    for level in levels:
+        print(max(level))
+
+
+ 
 class Solution:
     def graphify(self,root:TreeNode):
         n = root
@@ -150,3 +172,6 @@ s = Solution()
 print(s.amountOfTime(n,0))
 
 print(MinDist(n,0,4),'is the distance between 0 and 4')
+
+print('Level Order Transversal: ')
+LevelOrderTransversal(n)

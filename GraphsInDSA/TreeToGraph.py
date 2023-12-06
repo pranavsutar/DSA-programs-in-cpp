@@ -92,6 +92,40 @@ def FarestDistance(source):
                 q.append(v)
     return max(dist.values())
 
+'''Python code for: Chhota Bheem wants to eat the maximum number of ladoos in Dholakpur on Independence Day. The houses in Dholakpur are arranged in the form of a binary tree and have ladoos the same as their house number. Chhota Bheem is standing at his home initially. Find the maximum ladoos he can eat if he can go to houses within a maximum distance k from his house. The number of ladoos at his home should also be included in the sum. def ladoo( root, home, k): # Your code goes here
+'''
+
+# A function to find the sum of all the nodes at a distance k from the given node
+def sumAtK(root,home,k):
+    if root is None:
+        return 0
+    if root == home:
+        return sumAtK(root.left,home,k-1) + sumAtK(root.right,home,k-1) + root.key
+    return sumAtK(root.left,home,k) + sumAtK(root.right,home,k)
+
+# A function to find the sum of all the nodes at a distance k from the given node, which also includes ancestors
+def sumAtKIncludingAncestors(root, node, k):
+    if root is None:
+        return 0
+    if root == node:
+        return sumAtK(root, node, k)
+    return sumAtKIncludingAncestors(root.left, node, k) + sumAtKIncludingAncestors(root.right, node, k)
+def lad(home, k):
+    dist = dict()
+    dist[home] = 0
+    q = [home]
+    while q:
+        u = q.pop(0)
+        for v in adjl[u]:
+            if v not in dist:
+                dist[v] = dist[u]+1
+                q.append(v)
+    s = 0
+    for d in dist:
+        if dist[d] <=k:
+            s += d
+    return s
+    # return max(dist.values())
 if __name__ == '__main__':
     root = Node(1)
     root.left = Node(2)
@@ -105,13 +139,18 @@ if __name__ == '__main__':
     root.left.right.left = Node(10)
     root.left.right.right = Node(11)
     root.right.left.left = Node(12)
-    root.inorder()
-    root.preorder()
-    root.postorder()
+    # root.inorder()
+    # root.preorder()
+    # root.postorder()
     # TreeToGraph(root)
     TreeToUndirectedGraph(root)
     PrintGraph()
-    print(1,':',FarestDistance(1))
-    print(6,':',FarestDistance(6))
-    print(11,':',FarestDistance(11))
+    # print(1,':',FarestDistance(1))
+    # print(6,':',FarestDistance(6))
+    # print(11,':',FarestDistance(11))
+    
+
+    print(sumAtKIncludingAncestors(root, root.left.right, 2))
+    print(sumAtKIncludingAncestors(root, root.left.right, 5))
+    print(lad(root.left.right, 2))
 
