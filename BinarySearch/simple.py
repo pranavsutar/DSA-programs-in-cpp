@@ -48,6 +48,8 @@ def lastOcc(a,n,key)->int:
 def Count(a,n,key)->int:
     return lastOcc(a,n,key) - firstOcc(a,n,key) + 1
 
+
+
 N = 30
 a = [3*_+1 for _ in range(N)]
 a = [((3*_+1)//9)*4 for _ in range(N)]

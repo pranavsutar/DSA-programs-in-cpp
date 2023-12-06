@@ -109,4 +109,4 @@ if -1 in dist[1:n+1]:
     print (-1)
 else:
     print(max(dist[:n+1]))
-print(connectedComponents(n))
+# print(connectedComponents(n))

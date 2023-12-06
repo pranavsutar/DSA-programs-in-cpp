@@ -1,37 +1,65 @@
-def minDistBetweenTwoNodesinGraph(adjl,src,dest):
-    q = []
-    q.append(src)
-    visited = [False for _ in range(len(adjl))]
-    visited[src] = True
-    dist = [0 for _ in range(len(adjl))]
-    while len(q) > 0:
-        node = q.pop(0)
-        for child in adjl[node]:
-            if not visited[child]:
-                dist[child] = dist[node] + 1
-                visited[child] = True
-                q.append(child)
-    return dist[dest]
+'''# Sum of XOR of all subarrays
+# https://www.geeksforgeeks.org/sum-of-xor-of-all-subarrays/
+def findXorSum(arr, n):
+     
+    # variable to store the final Sum
+    Sum = 0
+ 
+    # multiplier
+    mul = 1
+ 
+    for i in range(30):
+ 
+        # variable to store number of sub-arrays
+        # with odd number of elements with ith
+        # bits starting from the first element
+        # to the end of the array
+        c_odd = 0
+ 
+        # variable to check the status of the
+        # odd-even count while calculating c_odd
+        odd = 0
+ 
+        # loop to calculate initial
+        # value of c_odd
+        for j in range(n):
+            if ((arr[j] & (1 << i)) > 0):
+                odd = (~odd)
+            if (odd):
+                c_odd += 1
+         
+        # loop to iterate through all the
+        # elements of the array and update Sum
+        for j in range(n):
+            Sum += (mul * c_odd)
+ 
+            if ((arr[j] & (1 << i)) > 0):
+                c_odd = (n - j - c_odd)
+ 
+        # updating the multiplier
+        mul *= 2
+     
+    # returning the Sum
+    return Sum
+n = int(input())
+arr = list(map(int, input().split()))
+print(findXorSum(arr, n))'''
 
+
+# LRU policy using linked list
+# but without pruning
+
+# cook your dish here
+
+'''You are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+ '''
+# cook your dish here
 for _ in range(int(input())):
-    n, c0 = map(int, input().split()) # c0 is black colored, others are white
-    sequence = list(map(int, input().split())) # it is the sequence in each node is colored black
-    black = [0 for _ in range(n+1)]
-    black[c0] = 1
-    # n-1 edges of the tree are given, we will use them to build the adjacency list
-    adjl = [[] for _ in range(n+1)]
-    for _ in range(n-1):
-        u, v = map(int, input().split())
-        adjl[u].append(v)
-        adjl[v].append(u)
-    curr_min = minDistBetweenTwoNodesinGraph(adjl,c0,sequence[0])
-    black[sequence[0]] = 1
-    print(curr_min, end=' ')
-    for i in range(1, len(sequence)):
-        # the minimum distance between any two black node to be printed
-        for j in range(1, n+1):
-            if black[j] == 1:
-                curr_min = min(curr_min, minDistBetweenTwoNodesinGraph(adjl,sequence[i],j))
-        print(curr_min, end=' ')
-        black[sequence[i]] = 1
-    print()
+    s = input()
+    l = s.count('L')
+    r = s.count('R')
+    u = s.count('_')
+    print(u + max(l,r))
