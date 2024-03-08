@@ -61,7 +61,6 @@ def MinFlips(A,B,k,n):
         else:
             print(p[n][i])
 
- 
 A = []
 B = []
 for _ in range(n):
@@ -69,4 +68,6 @@ for _ in range(n):
     A.append(a); B.append(b)
 
 MinFlips(A,B,m,n)
+
+
 # Time Complexity: O(nm)
