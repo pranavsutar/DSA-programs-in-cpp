@@ -76,3 +76,32 @@ int main()
    }
     return 0;
 }
+class Solution {
+public:
+    int numWays(int steps, int arrLen) {
+      //   vector<vector<int>> sa(steps+1, vector<int>(arrLen, 0));
+      //   sa[1][0] = 1;sa[1][1] = 1;
+      //    for(int i = 2; i <= steps; i++){
+      //          for(int j = 0; j < arrLen; j++){
+      //             sa[i][j] = sa[i-1][j];
+      //             if(j > 0) sa[i][j] = (sa[i][j] + sa[i-1][j-1])%1000000007;
+      //             if(j < arrLen-1) sa[i][j] = (sa[i][j] + sa[i-1][j+1])%1000000007;
+      //          }
+      //    }
+      //    return sa[steps][0];
+      int size = min(steps, arrLen);
+      vector<int> stepsArr(size+1, 0);
+      vector<int> prevStepsArr(size+1, 0);
+      if(size == 1) return 1;
+      prevStepsArr[0] = 1; prevStepsArr[1] = 1;
+      for(int i = 2; i <= steps; i++){
+          for(int j = 0; j < size; j++){
+             stepsArr[j] = prevStepsArr[j];
+             if(j > 0) stepsArr[j] = (stepsArr[j] + prevStepsArr[j-1])%1000000007;
+             if(j < size-1) stepsArr[j] = (stepsArr[j] + prevStepsArr[j+1])%1000000007;
+          }
+          prevStepsArr = stepsArr;
+      }
+      return stepsArr[0];
+    }
+};
